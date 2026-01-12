@@ -1,0 +1,715 @@
+
+<!DOCTYPE html> html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>متجر الأحذية المغربية</title>
+<div class="cart">
+  🛒 <span id="cart-count">0</span>
+</div>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Tahoma,Arial,sans-serif;
+  background:linear-gradient(135deg,#064e3b,#0f766e);
+  color:#fff;
+}
+
+/* ===== الشريط العلوي ===== */
+.navbar{
+  background:#022c22;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:3px solid #facc15;
+}
+
+.navbar h1{
+  font-size:26px;
+  font-weight:900;
+}
+
+.navbar span{color:#facc15}
+
+.navbar a{
+  color:#fff;
+  margin:0 12px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* ===== القسم الترحيبي ===== */
+.hero{
+  text-align:center;
+  padding:80px 20px;
+  background:rgba(0,0,0,0.3);
+}
+
+.hero h2{
+  font-size:38px;
+  margin-bottom:15px;
+}
+
+.hero p{
+  font-size:18px;
+  margin-bottom:25px;
+}
+
+.btn{
+  padding:14px 40px;
+  background:#facc15;
+  color:#022c22;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* ===== مميزات ===== */
+.features{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  padding:25px;
+  background:rgba(0,0,0,0.25);
+  font-weight:bold;
+}
+
+/* ===== المنتجات ===== */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+  padding:60px 30px;
+}
+
+.card{
+  background:#022c22;
+  border-radius:20px;
+  padding:15px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+.card img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  border-radius:15px;
+}
+
+.card h3{
+  color:#facc15;
+  margin:12px 0 5px;
+}
+
+.card p{
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.card button{
+  background:#facc15;
+  border:none;
+  padding:10px 30px;
+  border-radius:30px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* ===== Popup ===== */
+#popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-box{
+  background:#022c22;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+}
+
+/* ===== واتساب ===== */
+.whatsapp{
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  background:#25d366;
+  color:white;
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:26px;
+  text-decoration:none;
+}
+
+/* ===== التذييل ===== */
+footer{
+  background:#022c22;
+  text-align:center;
+  padding:18px;
+  border-top:3px solid #facc15;
+}/* ===== Animations ===== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+}
+
+.card img {
+  transition: transform 0.5s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.card button {
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.card button:hover {
+  background: #fde047;
+  transform: scale(1.1);
+}@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+}
+
+.whatsapp {
+  animation: pulse 2s infinite;
+}
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: blur(6px);
+}
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(250, 204, 21, 0.15); /* لون ذهبي شفاف */
+  z-index: 0; /* خلف كل المحتوى */
+}
+
+/* دوائر مختلفة الحجم والمكان */
+.top-left {
+  width: 250px;
+  height: 250px;
+  top: -80px;
+  left: -80px;
+}
+
+.top-right {
+  width: 200px;
+  height: 200px;
+  top: -50px;
+  right: -50px;
+}
+
+.bottom-left {
+  width: 220px;
+  height: 220px;
+  bottom: -70px;
+  left: -70px;
+}
+
+.bottom-right {
+  width: 180px;
+  height: 180px;
+  bottom: -50px;
+  right: -50px;
+}
+@media (max-width:768px){
+  .circle {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  .top-left { top:-40px; left:-40px;}
+  .bottom-right { bottom:-30px; right:-30px;}
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #064e3b, #0f766e);
+  border-radius: 20px; /* الزوايا المستديرة */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* ظل احترافي */
+  position: sticky;
+  top: 20px; /* يبقى مرئي أثناء التمرير */
+  z-index: 100;
+  backdrop-filter: blur(8px); /* تأثير شفاف عصري */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* تأثير Hover على الناف بار */
+.navbar:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+/* عنوان المتجر */
+.navbar h1 {
+  font-size: 28px;
+  font-weight: 900;
+  padding: 10px 20px;
+  background: rgba(250,204,21,0.2); /* خلفية شبه شفافة للعنوان */
+  border-radius: 15px; /* مربع مستدير للعنوان */
+  color: #fde047;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+/* تأثير Hover على العنوان */
+.navbar h1:hover {
+  transform: scale(1.05);
+  background: rgba(250,204,21,0.35);
+}
+/* عنوان احترافي */
+.hero-title {
+  font-size: 46px; /* كبير وواضح */
+  font-weight: 900;
+  color: #fde047; /* ذهبي مشرق */
+  background: linear-gradient(90deg, #facc15, #fcd34d);
+  
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+  animation: fadeUp 1s ease forwards; /* دخول جميل */
+}
+
+/* خط فاصل أسفل العنوان */
+.hero-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #fde047;
+  margin: 15px auto 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* تأثير Hover على العنوان */
+.hero-title:hover {
+  transform: scale(1.05);
+  transition: transform 0.4s ease, text-shadow 0.4s ease;
+  text-shadow: 0 4px 10px rgba(250,204,21,0.6);
+}
+.hero-title {
+  font-size: 46px;
+  font-weight: 900;
+  color: #fde047;
+  background: linear-gradient(90deg, #facc15, #fcd34d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+  transition: transform 0.4s ease, text-shadow 0.4s ease;
+}
+
+.hero-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #fde047;
+  margin: 15px auto 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.hero-title:hover {
+  transform: scale(1.05);
+  text-shadow: 0 4px 10px rgba(250,204,21,0.6);
+}
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(250,204,21,0.15);
+  z-index: 0;
+}
+
+.top-left { width:250px;height:250px;top:-80px;left:-80px;}
+.top-right { width:200px;height:200px;top:-50px;right:-50px;}
+.bottom-left { width:220px;height:220px;bottom:-70px;left:-70px;}
+.bottom-right { width:180px;height:180px;bottom:-50px;right:-50px;}
+.card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+}
+
+.card img {
+  transition: transform 0.5s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.card button {
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.card button:hover {
+  background: #fde047;
+  transform: scale(1.1);
+}
+.stars {
+  margin-bottom: 12px;
+  color: #fde047;
+  font-size: 18px;
+}.cart {
+  font-size:20px;
+  background:#fde047;
+  color:#022c22;
+  padding:5px 12px;
+  border-radius:25px;
+  font-weight:bold;
+  margin-left:15px;
+}:root{
+  --moroccan-green:#064e3b;
+  --moroccan-gold:#facc15;
+  --moroccan-blue:#0f766e;
+  --moroccan-red:#9f1239;
+}
+.moroccan-pattern{
+  position:absolute;
+  inset:0;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(250,204,21,0.08) 0,
+      rgba(250,204,21,0.08) 10px,
+      transparent 10px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(250,204,21,0.08) 0,
+      rgba(250,204,21,0.08) 10px,
+      transparent 10px,
+      transparent 20px
+    );
+  z-index:0;
+}.hero{
+  position:relative;
+  overflow:hidden;
+}
+.hero *{
+  position:relative;
+  z-index:1;
+}.hero-title{
+  padding:15px 30px;
+  border:3px solid var(--moroccan-gold);
+  border-radius:20px;
+  box-shadow:
+    inset 0 0 15px rgba(250,204,21,0.4),
+    0 10px 30px rgba(0,0,0,0.5);
+}.card::before{
+  content:"✦";
+  position:absolute;
+  top:12px;
+  right:15px;
+  font-size:20px;
+  color:var(--moroccan-gold);
+  opacity:0.8;
+}
+.card{
+  position:relative;
+}
+
+.moroccan-divider{
+  width:120px;
+  height:4px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    var(--moroccan-gold),
+    transparent
+  );
+  margin:25px auto;
+  border-radius:2px;
+}
+
+
+
+
+
+</style>
+</head>
+
+<body><!-- دوائر زينة -->
+<div class="circle top-left"></div>
+<div class="circle top-right"></div>
+<div class="circle bottom-left"></div>
+<div class="circle bottom-right"></div>
+<div class="moroccan-pattern"></div>
+
+<header class="navbar">
+  <h1><span>👟</span> متجر الأحذية المغربية</h1>
+<div class="moroccan-divider"></div>
+  <nav>
+    <a href="#">الرئيسية</a>
+    <a href="#products">المنتجات</a>
+    <a href="#">اتصل بنا</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2 class="hero-title">الأناقة تبدأ من قدميك</h2>
+  <p>أجود الأحذية بأثمنة مناسبة</p>
+  <a href="#products" class="btn">تصفح المنتجات</a>
+</section>
+
+<section class="features">
+  <div>🚚 توصيل سريع</div>
+  <div>💰 أثمنة مناسبة</div>
+  <div>✔️ جودة عالية</div>
+</section>
+
+<section class="products" id="products">
+
+  <div class="card">
+    <img src="io.jpeg">
+    <div class="stars">
+  ⭐⭐⭐⭐⭐
+</div>
+
+    <h3>حذاء رياضي</h3>
+    <p>170 درهم</p>
+    <button onclick="buy()">شراء</button>
+  </div>
+
+  <div class="card">
+    <img src="ik.jpeg">
+    <div class="stars">
+  ⭐⭐⭐⭐⭐
+</div>
+
+    <h3>حذاء عصري</h3>
+    <p>160 درهم</p>
+
+    <button onclick="buy()">شراء</button>
+  </div>
+
+  <div class="card">
+    <img src="bb.jpeg">
+    <div class="stars">
+  ⭐⭐⭐⭐⭐
+</div>
+
+    <h3>حذاء كلاسيك</h3>
+    <p>210 درهم</p>
+    <button onclick="buy()">شراء</button>
+  </div>
+
+  <div class="card">
+    <img src="nn.jpeg">
+    <div class="stars">
+  ⭐⭐⭐⭐⭐
+</div>
+    <h3>حذاء رسمي</h3>
+    <p>180 درهم</p>
+    <button onclick="buy()">شراء</button>
+  </div>
+
+  <div class="card">
+    <img src="vv.jpeg">
+    <div class="stars">
+  ⭐⭐⭐⭐⭐
+</div>
+
+    <h3>حذاء شبابي</h3>
+    <p>250 درهم</p>
+    <button onclick="buy()">شراء</button>
+  </div>
+
+  <div class="card">
+    <img src="kp.jpeg">
+    <div class="stars">
+  ⭐⭐⭐⭐⭐
+</div>
+
+    <h3>حذاء صيفي</h3>
+    <p>299 درهم</p>
+    <button onclick="buy()">شراء</button>
+  </div>
+  <div class="card">
+    <img src="tt.jpeg" >
+    <div class="stars">
+  ⭐⭐⭐⭐⭐
+</div>
+
+    <h3>حذاء شبابي</h3>
+    <p>180درهم</p> 
+    <button onclick="buy()">شراء</button>
+ </div>
+ <div class="card">
+    <img src="ga.jpeg" >
+    <div class="stars">
+  ⭐⭐⭐⭐⭐
+</div>
+
+    <h3>حذاء شبابي</h3>
+    <p>250درهم</p> 
+    <button onclick="buy()">شراء</button>
+ </div>
+ 
+
+
+
+
+</section>
+
+<footer>
+  © 2026 متجر الأحذية المغربية
+</footer>
+
+<!-- Popup -->
+<div id="popup">
+  <div class="popup-box">
+    <h3>طلب الشراء</h3>
+    <p>سيتم التواصل معك عبر واتساب</p>
+    <button onclick="closePopup()">حسنًا</button>
+  </div>
+</div>
+
+<a href="https://wa.me/212600000000" class="whatsapp" target="_blank">💬</a>
+
+<script>
+function buy(){
+  document.getElementById("popup").style.display="flex";
+}
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
+</script><script>
+/* ===== عداد السلة ===== */
+let cartCount = 0;
+
+function buy(){
+  cartCount++;
+  const cart = document.getElementById("cart-count");
+  if(cart){
+    cart.textContent = cartCount;
+  }
+  const popup = document.getElementById("popup");
+  if(popup){
+    popup.style.display = "flex";
+  }
+}
+
+/* ===== إغلاق Popup ===== */
+function closePopup(){
+  const popup = document.getElementById("popup");
+  if(popup){
+    popup.style.display = "none";
+  }
+}
+
+/* ===== تحريك الكروت عند تحميل الصفحة ===== */
+window.addEventListener("load", () => {
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card, index) => {
+    card.style.opacity = "0";
+    card.style.transform = "translateY(40px)";
+    setTimeout(() => {
+      card.style.transition = "all 0.8s ease";
+      card.style.opacity = "1";
+      card.style.transform = "translateY(0)";
+    }, index * 150);
+  });
+});
+
+/* ===== تفاعل النجوم التقييمية ===== */
+const starsContainers = document.querySelectorAll(".stars");
+
+starsContainers.forEach(starsBox => {
+  starsBox.innerHTML = "★★★★★".split("").map(star => {
+    return `<span class="star">★</span>`;
+  }).join("");
+
+  const stars = starsBox.querySelectorAll(".star");
+
+  stars.forEach((star, index) => {
+    star.addEventListener("click", () => {
+      stars.forEach((s, i) => {
+        s.style.color = i <= index ? "#fde047" : "#555";
+      });
+    });
+  });
+});
+
+/* ===== تأثير خفيف عند الضغط على زر الشراء ===== */
+const buttons = document.querySelectorAll(".card button");
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    btn.style.transform = "scale(0.9)";
+    setTimeout(() => {
+      btn.style.transform = "scale(1)";
+    }, 150);
+  });
+});
+</script>
+
+
+</body>
+</html>
